@@ -1,27 +1,27 @@
 <template>
   <div class="home">
-    <v-text-field v-model="newTaskTitle" @click:append="addTask" @keyup.enter="addTask" class="pa-3" outlined
-      label="Add Task" append-icon="mdi-plus" hide-details clearable></v-text-field>
+    <v-text-field @click:append="addTask" @keyup.enter="addTask" append-icon="mdi-plus" class="pa-3" clearable
+      hide-details label="Add Task" outlined v-model="newTaskTitle"></v-text-field>
+    <v-list v-if="$store.state.tasks.length" class="pt-0" flat>
+      <div :key="task.id" v-for="task in $store.state.tasks">
 
-    <v-list v-if="tasks.length" class="pt-0" flat>
-      <div :key="task.id" v-for="task in tasks">
-        <v-list-item @click="toggleTask(task.id)" :class="{ 'blue lighten-5': task.done }">
+        <v-list-item :class="{ 'blue lighten-5': task.done }" @click="$store.commit('toggleTask', task.id)">
           <template v-slot:default>
             <v-list-item-action>
               <v-checkbox :input-value="task.done" color="primary"></v-checkbox>
             </v-list-item-action>
-
             <v-list-item-content>
               <v-list-item-title :class="{ 'text-decoration-line-through': task.done }">{{ task.title }}
               </v-list-item-title>
             </v-list-item-content>
             <v-list-item-action>
-              <v-btn @click.stop="deleteTask(task.id)" icon>
+              <v-btn @click.stop="$store.commit('deleteTask', task.id)" icon>
                 <v-icon color="primary lighten-1">mdi-delete</v-icon>
               </v-btn>
             </v-list-item-action>
           </template>
         </v-list-item>
+
         <v-divider></v-divider>
       </div>
     </v-list>
@@ -42,41 +42,12 @@ export default {
   data() {
     return {
       newTaskTitle: '',
-      tasks: [
-        {
-          id: 1,
-          title: 'Wake up',
-          done: false
-        },
-        {
-          id: 2,
-          title: 'Get bananas',
-          done: false
-        },
-        {
-          id: 3,
-          title: 'Eat bananas',
-          done: false
-        },
-      ]
     }
   },
   methods: {
     addTask() {
-      let newTask = {
-        id: Date.now(),
-        title: this.newTaskTitle,
-        done: false
-      }
-      this.tasks.push(newTask)
+      this.$store.commit('addTask', this.newTaskTitle)
       this.newTaskTitle = ''
-    },
-    toggleTask(id) {
-      const task = this.tasks.find(task => task.id === id)
-      task.done = !task.done
-    },
-    deleteTask(id) {
-      this.tasks = this.tasks.filter(task => task.id !== id)
     }
   }
 }
