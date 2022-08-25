@@ -28,7 +28,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="primary" dark src="mountains.jpg" prominent>
+    <v-app-bar app color="primary" dark src="mountains.jpg" height="170">
       <template v-slot:img="{ props }">
         <v-img v-bind="props" gradient="to top right, rgba(19,84,122,.5), rgba(128,208,199,.8)"></v-img>
       </template>
@@ -40,7 +40,14 @@
           <the-search />
         </v-row>
         <v-row>
-          <v-app-bar-title class="ml-4">Vuetify Todo</v-app-bar-title>
+          <v-app-bar-title
+            class="text-h4 ml-4"
+          >
+            Vuetify Todo
+          </v-app-bar-title>
+        </v-row>
+        <v-row>
+          <live-date-time />
         </v-row>
       </v-container>
 
@@ -57,6 +64,7 @@
 export default {
   components: {
     'the-search': require('@/components/Tools/TheSearch.vue').default,
+    'live-date-time': require('@/components/Tools/LiveDateTime.vue').default,
     'the-snackbar': require('@/components/Shared/TheSnackbar.vue').default
   },
   data: () => ({
@@ -68,3 +76,8 @@ export default {
   }),
 }
 </script>
+
+<style lang="sass">
+.v-app-bar-title__content
+  width: 100% 
+</style>
