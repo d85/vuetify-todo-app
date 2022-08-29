@@ -72,6 +72,9 @@ export default {
     'live-date-time': require('@/components/Tools/LiveDateTime.vue').default,
     'the-snackbar': require('@/components/Shared/TheSnackbar.vue').default
   },
+  mounted() {
+    this.$store.dispatch('getTasks')
+  },
   data: () => ({
     drawer: null,
     items: [
