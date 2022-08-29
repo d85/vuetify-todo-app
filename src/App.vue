@@ -33,9 +33,18 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="primary" dark src="mountains.jpg" height="170">
+    <v-app-bar
+      color="primary"
+      src="mountains.jpg"
+      app
+      dark
+      :height="$route.path === '/' ? '238' : '170'"
+    >
       <template v-slot:img="{ props }">
-        <v-img v-bind="props" gradient="to top right, rgba(19,84,122,.5), rgba(128,208,199,.8)"></v-img>
+        <v-img
+          v-bind="props"
+          gradient="to top right, rgba(19,84,122,.9), rgba(128,208,199,.9)"
+        ></v-img>
       </template>
 
       <v-container class="pa-0" fluid>
@@ -54,6 +63,9 @@
         <v-row>
           <live-date-time />
         </v-row>
+        <v-row v-if="$route.path === '/'">
+          <field-add-task />
+        </v-row>
       </v-container>
 
     </v-app-bar>
@@ -70,6 +82,7 @@ export default {
   components: {
     'the-search': require('@/components/Tools/TheSearch.vue').default,
     'live-date-time': require('@/components/Tools/LiveDateTime.vue').default,
+    'field-add-task': require('@/components/Todo/FieldAddTask.vue').default,
     'the-snackbar': require('@/components/Shared/TheSnackbar.vue').default
   },
   mounted() {
